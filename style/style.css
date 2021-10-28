@@ -69,8 +69,8 @@ body.light {
   outline: 0;
   background: transparent;
   position: absolute;
-  right: 4rem;
-  top: 1rem;
+  right: 15%;
+  top: 25%;
   cursor: pointer;
 }
 
