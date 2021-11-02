@@ -1,9 +1,9 @@
+import { DialogInputData } from '../dialog.js';
 import { BaseComponent } from './../../component.js';
-import { DialogInput } from './media-input.js';
 
 export class TextInput
   extends BaseComponent<HTMLElement>
-  implements DialogInput
+  implements DialogInputData
 {
   constructor(private textType: string) {
     super(`

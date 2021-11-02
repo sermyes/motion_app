@@ -1,5 +1,5 @@
 import { TextInput } from './component/dialog/input/text-input.js';
-import { Dialog } from './component/dialog/dialog.js';
+import { Dialog, DialogInputData } from './component/dialog/dialog.js';
 import { Component } from './component/component.js';
 import { VideoComponent } from './component/page/item/video.js';
 import { TodoComponent } from './component/page/item/todo.js';
@@ -10,18 +10,24 @@ import {
   PageComponent,
   PageItemComponent
 } from './component/page/page.js';
-import {
-  DialogInput,
-  MediaInput
-} from './component/dialog/input/media-input.js';
+import { MediaInput } from './component/dialog/input/media-input.js';
+
+type themeColor = 'dark' | 'light';
 
 class App {
   private page: Component & Composable;
+  private theme: themeColor;
 
-  constructor(private appRoot: HTMLElement) {
+  constructor(private appRoot: HTMLElement, private dialogRoot: HTMLElement) {
     this.page = new PageComponent(PageItemComponent);
     this.page.attatchTo(this.appRoot);
 
+    this.theme = 'dark';
+    this.bindElementToDialog();
+    this.changeTheme();
+  }
+
+  private bindElementToDialog() {
     const dialogBtn = document.querySelector(
       '.create-button'
     )! as HTMLButtonElement;
@@ -31,25 +37,24 @@ class App {
       )! as HTMLSelectElement;
       const input = this.makeDialogInput(select.value);
 
-      const dialog = new Dialog();
+      const themeColor = this.theme !== 'dark' ? '#fff' : undefined;
+      const dialog = new Dialog(themeColor);
       dialog.addChild(input);
-      dialog.attatchTo(document.body);
+      dialog.attatchTo(this.dialogRoot);
 
       dialog.setOnAddListener(() => {
         const pageItem = this.makePageComponent(input);
         this.page.addChild(pageItem);
-        dialog.removeFrom(document.body);
-        // https://www.youtube.com/embed/1OdkTgq-f5c
-        // https://picsum.photos/300
+        dialog.removeFrom(this.dialogRoot);
       });
 
       dialog.setOnCloseListener(() => {
-        dialog.removeFrom(document.body);
+        dialog.removeFrom(this.dialogRoot);
       });
     });
   }
 
-  private makeDialogInput(value: string): DialogInput {
+  private makeDialogInput(value: string): DialogInputData {
     switch (value) {
       case 'image':
         return new MediaInput('image');
@@ -64,7 +69,7 @@ class App {
     }
   }
 
-  private makePageComponent(input: DialogInput): Component {
+  private makePageComponent(input: DialogInputData): Component {
     switch (input.type) {
       case 'image':
         return new ImageComponent(input.title, input.value);
@@ -78,6 +83,35 @@ class App {
         throw new Error('undefined content type.');
     }
   }
+
+  private changeTheme() {
+    const changeBtn = document.querySelector(
+      '.themeButton'
+    )! as HTMLButtonElement;
+
+    changeBtn.onclick = () => {
+      const body = document.querySelector('body')! as HTMLElement;
+      const select = document.querySelector('.select')! as HTMLElement;
+      const selectPanel = document.querySelector(
+        '.select-panel'
+      )! as HTMLElement;
+      const doc = document.querySelector('.document')! as HTMLElement;
+
+      if (this.theme === 'dark') {
+        this.theme = 'light';
+        body.classList.add('light');
+        select.classList.add('light');
+        selectPanel.classList.add('light');
+        doc.classList.add('light');
+      } else {
+        this.theme = 'dark';
+        body.classList.remove('light');
+        select.classList.remove('light');
+        selectPanel.classList.remove('light');
+        doc.classList.remove('light');
+      }
+    };
+  }
 }
 
-new App(document.querySelector('.document')! as HTMLElement);
+new App(document.querySelector('.document')! as HTMLElement, document.body);

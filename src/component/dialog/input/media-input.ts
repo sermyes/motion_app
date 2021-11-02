@@ -1,14 +1,9 @@
-import { BaseComponent, Component } from './../../component.js';
-
-export interface DialogInput extends Component {
-  get title(): string;
-  get value(): string;
-  get type(): string;
-}
+import { DialogInputData } from '../dialog.js';
+import { BaseComponent } from './../../component.js';
 
 export class MediaInput
   extends BaseComponent<HTMLElement>
-  implements DialogInput
+  implements DialogInputData
 {
   constructor(private mediaType: string) {
     super(`

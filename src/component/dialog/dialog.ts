@@ -4,11 +4,17 @@ import { BaseComponent, Component } from './../component.js';
 type CloseListener = () => void;
 type AddListener = () => void;
 
+export interface DialogInputData extends Component {
+  get title(): string;
+  get value(): string;
+  get type(): string;
+}
+
 export class Dialog extends BaseComponent<HTMLElement> implements Composable {
   private onCloseListener?: CloseListener;
   private onAddListener?: AddListener;
 
-  constructor() {
+  constructor(private color?: string) {
     super(`
 			<section class="dialog">
 				<div class="dialog__container">
@@ -20,6 +26,13 @@ export class Dialog extends BaseComponent<HTMLElement> implements Composable {
 				</div>
 			</section>
 		`);
+
+    const dialogContainer = this.element.querySelector(
+      '.dialog__container'
+    )! as HTMLElement;
+    if (this.color) {
+      dialogContainer.style.background = this.color;
+    }
 
     const closeBtn = this.element.querySelector(
       '.dialog__close'
