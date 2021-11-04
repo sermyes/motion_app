@@ -7,6 +7,7 @@ import { MemoComponent } from './component/page/item/memo.js';
 import { ImageComponent } from './component/page/item/image.js';
 import {
   Composable,
+  Draggable,
   PageComponent,
   PageItemComponent
 } from './component/page/page.js';
@@ -15,12 +16,13 @@ import { MediaInput } from './component/dialog/input/media-input.js';
 type themeColor = 'dark' | 'light';
 
 class App {
-  private page: Component & Composable;
+  private page: Component & Composable & Draggable;
   private theme: themeColor;
 
   constructor(private appRoot: HTMLElement, private dialogRoot: HTMLElement) {
     this.page = new PageComponent(PageItemComponent);
     this.page.attatchTo(this.appRoot);
+    this.page.draggable();
 
     this.theme = 'dark';
     this.bindElementToDialog();

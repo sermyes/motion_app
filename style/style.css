@@ -8,7 +8,8 @@
   --color-pg-light: rgba(255, 255, 255, 0.6);
   --color-light: #fff;
   --color-lightgrey: rgb(182, 180, 190);
-  --color-bg-accent: #2d2d2d;
+  --color-bg-accent-dark: #2d2d2d;
+  --color-bg-accent-light: #cacaca;
   --color-accent: #f64435;
   --color-shadow: 1px 1px 4px 2px rgba(150, 150, 150, 0.4);
 }
@@ -102,23 +103,29 @@ body.light {
   /* Firefox */
   scrollbar-width: 6px;
   background-color: var(--color-dark);
-  scrollbar-color: var(--color-bg-accent);
+  scrollbar-color: var(--color-bg-accent-dark);
   scrollbar-face-color: var(--color-accent);
 }
 
 .document.light {
   background-color: var(--color-light);
+  scrollbar-color: var(--color-bg-accent-light);
 }
 
 .document::-webkit-scrollbar {
   /* Safari and Chrome */
-  background-color: var(--color-bg-accent);
+  background-color: var(--color-bg-accent-dark);
   width: 6px;
 }
 
 .document::-webkit-scrollbar-thumb {
   /* Safari and Chrome */
   background-color: var(--color-accent);
+}
+
+.document.light::-webkit-scrollbar {
+  /* Safari and Chrome */
+  background-color: var(--color-bg-accent-light);
 }
 
 .footer {
@@ -260,7 +267,7 @@ select::-ms-expand {
 
 /* page */
 .page {
-  padding: 0;
+  padding: 0.8em;
   margin: 0;
 }
 
@@ -269,7 +276,22 @@ select::-ms-expand {
   display: flex;
   flex-direction: row;
   align-items: center;
-  border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  opacity: 1;
+  pointer-events: all;
+  transition: transform 0.3s, opacity 0.3s;
+  margin-bottom: 15px;
+  cursor: move;
+  box-shadow: var(--color-shadow);
+}
+
+.page-item.target {
+  transform: scale(1.02);
+  border: 1px solid var(--color-accent);
+}
+
+.page-item.lifted {
+  opacity: 0.2;
 }
 
 .page-item__contents {
@@ -333,4 +355,9 @@ select::-ms-expand {
 
 .image__thumbnail {
   background-size: cover;
+}
+
+/* page-item */
+.mute-children * {
+  pointer-events: none;
 }
