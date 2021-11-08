@@ -18,6 +18,9 @@ export class MediaInput
 				</div>
 			</div>
 		`);
+
+    const url = this.element.querySelector('#url')! as HTMLInputElement;
+    url.placeholder = 'https://example.com';
   }
 
   get title(): string {

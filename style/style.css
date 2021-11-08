@@ -361,3 +361,8 @@ select::-ms-expand {
 .mute-children * {
   pointer-events: none;
 }
+
+/* dialog url */
+#url::placeholder {
+  opacity: 0.6;
+}

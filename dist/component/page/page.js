@@ -138,7 +138,6 @@ export class PageComponent extends BaseComponent {
     }
     onDragDrop(e) {
         e.preventDefault();
-        console.log(this.dragTarget, this.dropTarget);
         if (!this.dropTarget) {
             return;
         }

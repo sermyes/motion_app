@@ -14,6 +14,8 @@ export class MediaInput extends BaseComponent {
 			</div>
 		`);
         this.mediaType = mediaType;
+        const url = this.element.querySelector('#url');
+        url.placeholder = 'https://example.com';
     }
     get title() {
         const title = this.element.querySelector('#title');

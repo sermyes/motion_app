@@ -205,7 +205,6 @@ export class PageComponent
 
   onDragDrop(e: DragEvent) {
     e.preventDefault();
-    console.log(this.dragTarget, this.dropTarget);
     if (!this.dropTarget) {
       return;
     }
